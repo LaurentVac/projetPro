@@ -1,0 +1,112 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    /* background-color: grey; */
+}
+.navheader{
+    font-size: 20px;
+}
+h1,.navheader{
+    font-weight: bold;
+        color:white;
+        animation-name: example;
+        animation-duration: 30s;
+        }
+        
+        @keyframes example {
+        0%   {color:#F34D23;}
+        20%  {color: #FEB801;}
+        40%  {color: #05479E;}
+        60% {color: #107B10;}
+        80%{color: #E60012;}
+        100%{color: wheat;}
+        }
+body {
+    background: linear-gradient(-45deg, #32432C, #304260,#000000, #420d14);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+/*header et navbar*/
+.buttonNav {
+    font-weight: bold;
+    color: white;
+    background-color: #304260;
+}
+/*fin header*/
+/*début main*/
+.titleHome {
+    border: solid 1px black;
+    color: #00E5FF;
+    background-color: black;
+}
+/* fin main */
+/* début footer */
+#footer {
+    background-color: black;
+    height: 10%;
+}
+/* fin footer */
+/* Formulaire */
+/*fin de formulaire*/
+/*page de test*/
+.description {
+    color: white;
+    background-color: black;
+}
+.positiveReview,
+.negativeReview {
+    color: white;
+    background-color: black;
+    border-radius: 2%;
+}
+/*notation*/
+.rating a {
+    float: right;
+    color: orange;
+    text-decoration: none;
+    font-size: 3em;
+    transition: color .4s;
+}
+/* .rating a:hover,
+ .rating a:focus,
+ .rating a:hover ~ a,
+ .rating a:focus ~ a {
+    color: orange;
+    cursor: pointer;
+ } */
+/*commentaire*/
+.comment {
+    color: white;
+    background-color: black;
+}
+.commentbox {
+    background-color: #304260;
+}
+/* fleche js */
+.btnarrow {
+    height: 100px;
+    width: 100px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    cursor: pointer;
+}
+.arrow {
+    height: 50%;
+    width: 50%;
+    opacity: 0.5;
+}
