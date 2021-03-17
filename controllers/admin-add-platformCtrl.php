@@ -15,15 +15,24 @@ $listGame = $game->listAllGame();
 $platform = new Platform ();
 $listPlatform = $platform->getAllPlatform();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $id = intval($_POST['game']);
-    $idPlatform = $_POST['platform'];
-    $provide = new Provide ($id);
-    var_dump($_POST['platform']);
-   
-    foreach($idPlatform as $platform => $value){
-         $provide->addPlatformForGame($id,$value);
-    }   
+
+    if(!empty($_POST['game']) && !empty($_POST['platform'])){
+        $id = intval($_POST['game']);
+        $idPlatform = $_POST['platform'];
+        $provide = new Provide ($id);
+        foreach($idPlatform as $key => $value){
+            $validId = $platform->getId($value);
+            if($validId){
+                $provide->addPlatformForGame($id,$value);
+            }else{
+                $errorsArray['form-error']= 'Données non valide';
+            }
+        }  
+    }else{
+        $errorsArray['form-error']= 'Merci de remplir tout les champs';
+    } 
 }
+var_dump($errorsArray);
 
 
 

@@ -21,7 +21,23 @@
             private $_default4;
             private $_pdo;
             
-            public function __construct(  $title = null, $synopsis= null, $releaseDate = null, $test=null,$note = null,$iframeYoutube=null,$idStudio=null,$asset1 = null,$asset2 = null,$asset3 = null,$asset4 = null, $default1=null,$default2=null,$default3=null,$default4=null,$id = null ){
+            public function __construct( $title = null,
+                                         $synopsis= null,
+                                         $releaseDate = null, 
+                                         $test=null,
+                                         $note = null,
+                                         $iframeYoutube=null,
+                                         $idStudio=null,
+                                         $asset1 = null,
+                                         $asset2 = null,
+                                         $asset3 = null,
+                                         $asset4 = null, 
+                                         $default1=null,
+                                         $default2=null,
+                                         $default3=null,
+                                         $default4=null,
+                                         $id = null
+                                        ){
                
                 $this->_title = $title;
                 $this->_synopsis = $synopsis;
@@ -52,23 +68,12 @@
                        return $sth->fetch(PDO::FETCH_OBJ);
                        
                 }catch  (PDOException $e) {
-                    
+                    echo $e;
                     return false;
                 }   
             }
 
-            public function listAllGame(){
-                try {
-                    $sql = 'SELECT * FROM `game`;';
-                       // préparation de la requête
-                       $sth = $this->_pdo->query($sql);           
-                       $test = $sth->fetchAll(PDO::FETCH_OBJ);
-                       return $test;
-                }catch  (PDOException $e) {
-                    
-                    return false;
-                } 
-            }
+           
             public function getOneTest($id){
                 try {
                     $sql = 'SELECT * FROM `game` WHERE `id` = :id ;';
@@ -123,10 +128,22 @@
                     return false;
                 }   
             }
-
+            public function listAllGame(){
+                try {
+                    $sql = 'SELECT * FROM `game`;';
+                       // préparation de la requête
+                       $sth = $this->_pdo->query($sql);           
+                       $test = $sth->fetchAll(PDO::FETCH_OBJ);
+                       return $test;
+                }catch  (PDOException $e) {
+                    
+                    return false;
+                } 
+            }
             public function updateGame($id){
                 try {
-                    $sql = 'UPDATE  `game` SET `title` = :title, `synopsis` = :synopsis, `releaseDate` = :releaseDate, `test` = :test, `note` =:note, `iframeYoutube` = :iframeYoutube, `id_studio` =:idStudio, `asset1` =:asset1, `asset2` =:asset2, `asset3` = :asset3, `asset4` = :asset4, `default1` = :default1, `default2` =:default2, `default3` =:default3, `default4` =:default4 WHERE `id` = :id ;';
+                    $sql = 'UPDATE  `game` SET `title` = :title, `synopsis` = :synopsis, `releaseDate` = :releaseDate, `test` = :test, `note` =:note, `iframeYoutube` = :iframeYoutube, `id_studio` =:idStudio, `asset1` =:asset1, `asset2` =:asset2, `asset3` = :asset3, `asset4` = :asset4, `default1` = :default1, `default2` =:default2, `default3` =:default3, `default4` =:default4 
+                            WHERE `id` = :id ;';
                            
                     // préparation de la requête
                     $sth = $this->_pdo->prepare($sql);
@@ -152,5 +169,80 @@
                     echo 'Connexion échouée : ' . $e->getMessage();
                     return false;
                 }
+            }
+
+            public function deleteGame($id){
+                try { 
+                    $sql ='DELETE FROM `game` 
+                    WHERE `id` = :id;';
+                    $sth = $this->_pdo->prepare($sql);
+                    $sth->bindValue(':id',$id,PDO::PARAM_INT);
+                    return $sth->execute();
+                } catch (PDOException $e) {
+                    return false;
+                }
+            }
+
+            
+            public function paginationGame($page){
+                try{
+                    $sql = 'SELECT * FROM `patients` LIMIT :limite, 5 ;';
+                    $query = $this->_pdo->prepare($sql);
+                    // $query->bindValue(':limite', $limite, PDO::PARAM_INT);
+                    /* … auquel il faut aussi lier la valeur, comme pour la limite */
+                    $query->bindValue(':limite', $page, PDO::PARAM_INT);
+                    /* Le reste se passe comme auparavant */
+                     $query->execute();
+                    return($query->fetchAll());
+                }catch (PDOException $e) {
+                    return false ;
+                }
+            }
+            public static function getAll($search='', $limit=null, $offset=0){
+        
+                try{
+                    if(!is_null($limit)){ // Si une limite est fixée, il faut tout lister
+                        $sql = 'SELECT * FROM `game` 
+                        WHERE `title` LIKE :search 
+                         
+                        LIMIT :limit OFFSET :offset;';
+                    } else {
+                        $sql = 'SELECT * FROM `game` 
+                        WHERE `title` LIKE :search ;';
+                    }
+        
+                    $pdo = Database::connect();
+        
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(':search','%'.$search.'%',PDO::PARAM_STR);
+                    
+                    if(!is_null($limit)){
+                        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+                        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+                    }
+                    
+                    $stmt->execute();
+                    return($stmt->fetchAll());
+                }
+                catch(PDOException $e){
+                    return false;
+                }
+        
+            }
+            public static function count($s){
+                $pdo = Database::connect();
+                try{
+                    $sql = 'SELECT * FROM `game`
+                        WHERE `title` LIKE :search ;';
+        
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(':search','%'.$s.'%',PDO::PARAM_STR);
+                    $stmt->execute();
+                    return($stmt->rowCount());
+                }
+                catch(PDOException $e){
+                    return 0;
+                }
+                
             }
         }

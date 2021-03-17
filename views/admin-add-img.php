@@ -19,14 +19,14 @@
                         </div>
                     </div>
                     <div class="form-group col-12">
-                            <label class="col-6" for="imgMenu"><strong>Image de menu</strong></label>
+                            <!-- <label class="col-6" for="imgMenu"><strong>Image de menu</strong></label>
                             <input class="col-6" type="file" name='imgMenu' id="imgMenu">
                             <div  class="form-text formError">
                                 <?= $errorsArray['format_img'] ?? '' ?>
                             </div>
-                            <!-- <input type="text" name="altImgMenu"> -->
-                            <label class="col-6"for="imgPrincipal"><strong>Image principale</strong></label>
-                            <input class="col-6"type="file" name='imgPrincipal' id="imgPrincipal">
+                            <input type="text" name="altImgMenu"> -->
+                            <!-- <label class="col-6"for="imgPrincipal"><strong>Image principale</strong></label>
+                            <input class="col-6"type="file" name='imgPrincipal' id="imgPrincipal"> --> -->
                             
                             <!-- <input type="text"name="altImgPrincipal"> -->
                             <label class="col-6"for="imgCarousel"><strong>Image de caroussel</strong></label>

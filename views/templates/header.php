@@ -25,27 +25,22 @@
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">  
                         <a class="nav-link active navheader ml-4" href="/index.php">Accueil</a>
-                        <a class="nav-link navheader ml-4 " href="menutest.php">Test</a>
-                        <a class="nav-link navheader ml-4" href="menutop.php">Top 3</a>
+                        <a class="nav-link navheader ml-4 " href="/controllers/page-menu-testCtrl.php">Test</a>
+                        <!-- <a class="nav-link navheader ml-4" href="menutop.php">Top 3</a> -->
                         <a class="nav-link navheader ml-4" href="mailto:laurentvac80@gmail.com">Contact</a>
                         
-                        <a class="nav-link navheader ml-4" href="../controllers/login-signupCtrl.php">
-                            <button type="submit" class="btn buttonNav mt-2 d-md-none ">Mon compte</button>
-                        </a>
+                       
                     </div>
                     <?php
-                                if(!empty($_SESSION['pseudo'])){
-                                    echo '
-                                        <div class="text-light navbar-brand ml-auto">'.$_SESSION['pseudo'].'</div>
-                                        <a href="/controllers/user-pageCtrl.php" class="important"><div>Mon compte</div></a>
-                                        <a class="ml-1" href="/controllers/signoutCtrl.php" class="important"><div>Déconnexion</div></a>
-                                        ';
-                                } 
-                        ?>
-                </div>
-                <?php if(isset($_SESSION['admin'])){ ?>
-                <a href="/controllers/adminCtrl.php"><button type="submit" class="btn buttonNav mt-2 mr-1 d-none d-md-block">ADMIN</button></a>
-                <?php }?>
+                        if(!empty($_SESSION['pseudo'])){
+                            echo '
+                                <div class="text-light navbar-brand ml-auto">'.$_SESSION['pseudo'].'</div>
+                                <a href="/controllers/user-pageCtrl.php" class="important"><div>Mon compte</div></a>
+                                <a class="ml-1" href="/controllers/signoutCtrl.php" class="important"><div>Déconnexion</div></a>
+                                ';
+                        } 
+                    ?>
+                </div>                
                 <?php if(empty($_SESSION)){?>
                 <a href="/controllers/login-signupCtrl.php">Inscription/Connexion</button></a>
                 <?php } ?>

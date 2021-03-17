@@ -27,6 +27,20 @@
                     return false;
                 }   
             }
+            public function getId($id){
+                try {
+                    $sql = 'SELECT `id` FROM `studio` WHERE `id` = :id ;';
+                       // préparation de la requête
+                       $sth = $this->_pdo->prepare($sql);
+                       $sth->bindvalue(':id', $id , PDO::PARAM_INT);
+                       $sth->execute();
+                       $test = $sth->fetch(PDO::FETCH_OBJ);
+                       return $test;
+                }catch  (PDOException $e) {
+                    
+                    return false;
+                } 
+            }
             public function getStudioForGame($id){
 
                 try {

@@ -11,14 +11,21 @@
                 <!-- images dans carousel -->
             <div id="carouselExampleFade" class="carousel slide carousel-fade col-md-5  m-auto" data-ride="carousel">
                 <div class="carousel-inner mt-3 mt-md-0">
-                    <div class="carousel-item active">
+                    <!-- <div class="carousel-item active">
                         <img src="/assets/img/main/<?=$idGame?>.png" class="d-block w-100" alt="mkt2">
-                    </div> 
-                    <?php foreach($displayPicture as $picture): ?>
-                    <div class="carousel-item ">
-                        <img src="/assets/img/carousel/<?=$picture->id?>.png" class="d-block w-100" alt="mkt2">
-                    </div>
-                    <?php endforeach ?>
+                    </div>  -->
+                    <?php $i=1;
+                    foreach($displayPicture as $picture){ 
+                        if($i == 1){ ?>
+                            <div class="carousel-item active">
+                <?php   }else{?>
+                            <div class="carousel-item ">
+                            <?php }?>
+                        
+                            <img src="/assets/img/carousel/<?=$picture->id?>.png" class="d-block w-100" alt="mkt2">
+                        </div>
+                        <?php $i++;
+                    } ?>
                     
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">

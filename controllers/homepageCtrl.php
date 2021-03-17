@@ -11,7 +11,7 @@ $lastGame = $game->get2LastGame();
 
 $admin = new User();
 
-var_dump($_SESSION);
+
 
 
 

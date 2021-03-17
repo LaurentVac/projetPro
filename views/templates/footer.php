@@ -1,3 +1,4 @@
+<div class="emptyFooter"></div>
 <footer id="footer" class="container-fluid mt-4">
         <div class="row m-auto">
           <span class="text-white">Myjvtest by Laurent</span>

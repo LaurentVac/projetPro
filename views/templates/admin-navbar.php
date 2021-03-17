@@ -8,7 +8,7 @@
         <li class="nav-item">
                 <a class="nav-link" href="/controllers/admin-listTestCtrl.php">Liste de tests</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="/controllers/admin-add-gameCtrl.php">Ajout de test<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">

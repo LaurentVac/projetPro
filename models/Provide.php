@@ -2,11 +2,8 @@
 // 
      require_once(dirname(__FILE__).'/../utils/Database.php');
         class Provide {
-            private $_id;
-            
-            private $_id_platform;
-         
-            
+            private $_id;        
+            private $_id_platform;    
             private $_pdo;
             
             public function __construct(  $id = null, $idPlatform = null ){
@@ -19,15 +16,16 @@
 
             public function addPlatformForGame($id,$idPlatform = null){
                 try {
-                    var_dump($id,$this->_id_platform);
+                    
                     $sql = 'INSERT INTO `provide` (`id`, `id_platform`) VALUE ( :id , :id_platform);';
                     $sth = $this->_pdo->prepare($sql);
                     $sth->bindValue(':id',$id, PDO::PARAM_INT);
                     $sth->bindValue(':id_platform',$idPlatform, PDO::PARAM_INT);
                     return $sth->execute();
                 } catch  (PDOException $e) {
-                    echo 'Connexion échouée : ' . $e->getMessage();
-                    return false;
+                    echo 'Connexion échouée  : ' . $e->getMessage();
+                    $errorsArray['error_sql'] = 'Une erreur est survenue, merci de recommencer';
+                    // return false;
                 } 
             }
             public function updatePlatform($id){
@@ -38,7 +36,19 @@
                     $sth->bindValue(':id_platform',$this->_id_platform, PDO::PARAM_INT);
                     return $sth->execute();
                 } catch  (PDOException $e) {
-                    echo 'Connexion échouée : ' . $e->getMessage();
+                    echo 'Connexion échouée pro: ' . $e->getMessage();
+                    return false;
+                } 
+            }
+            public function get($id){
+                try {
+                    $sql = 'SELECT * FROM `provide` WHERE `id` = :id;';
+                    $sth = $this->_pdo->prepare($sql);
+                    $sth->bindValue(':id',$id, PDO::PARAM_INT);
+                    
+                    return $sth->execute();
+                } catch  (PDOException $e) {
+                    echo 'Connexion échouée pro: ' . $e->getMessage();
                     return false;
                 } 
             }

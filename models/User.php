@@ -80,6 +80,20 @@
                     return false;
                 }   
              }
+             public function getIdUser($id){
+                try {
+                    $sql = 'SELECT `id` FROM `user` WHERE `id` = :id;';
+                    // préparation de la requête
+                    $sth = $this->_pdo->prepare($sql);
+                    $sth->bindValue(':id',$id,PDO::PARAM_INT);
+                    $sth->execute();
+                    $listUser = $sth->fetchAll(PDO::FETCH_OBJ);
+                    return $listUser;
+                }catch  (PDOException $e) {
+                    
+                    return false;
+                } 
+             }
             
         
             public  function addUser(){     
@@ -136,6 +150,21 @@
                     }
                 }
                 return false;
+            }
+            public function profilUserForAdmin($id){
+                try {
+                    $sql = 'SELECT * FROM `user`
+                            WHERE `id` = :id ;';
+                       // préparation de la requête
+                       $sth = $this->_pdo->prepare($sql);
+                       $sth->bindValue(':id',$id,PDO::PARAM_STR);
+                       $sth->execute();
+                       return $sth->fetch(PDO::FETCH_OBJ);
+                       
+                }catch  (PDOException $e) {
+                    echo $e;
+                    return false;
+                }  
             }
 
             public function profilUser($id){
@@ -226,4 +255,23 @@
                     return false;
                 }
             }
+            public function anonymizeUser($id){
+                try {
+                    $sql = 'UPDATE `user` SET `firstname` = null , `lastname` = null, `mail` =null, `pseudo`= null, `passwd` = null
+                            WHERE `id`= :id;'; 
+                    $sth = $this->_pdo->prepare($sql);
+                    // $sth->bindValue(':firstname',$this->_firstname, PDO::PARAM_NULL);
+                    // $sth->bindValue(':lastname', $this->_lastname, PDO::PARAM_NULL);
+                    // $sth->bindValue(':mail', $this->_mail, PDO::PARAM_NULL);
+                    // $sth->bindValue(':pseudo', $this->_pseudo, PDO::PARAM_NULL);
+                   
+                    $sth->bindValue(':id', $id, PDO::PARAM_INT);
+                    return $sth->execute();
+                } catch (PDOException $e) {
+                    echo $e;
+                    return false;
+                    
+                }
+            }
+             
         }

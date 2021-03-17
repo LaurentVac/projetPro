@@ -43,7 +43,7 @@
                 <!-- Pseudo -->
                 <div class="form-group">
                     <label for="pseudo">Pseudo</label>
-                    <input type="text" class="form-control" id="pseudo" name="pseudo" aria-describedby="pseudo" pattern="^([a-zA-Z0-9-_]{2,20})$" title="Le pseudo peut comporter de 2 à 20 caractères. Seulement lettres, chiffres et '-' acceptés  " value="<?=$pseudo ?? ''?>" required>
+                    <input type="text" class="form-control" id="pseudo" name="pseudo" aria-describedby="pseudo" pattern="^([a-zA-Z0-9-_]{2,20})$" title="Le pseudo peut comporter de 2 à 20 caractères. Seulement lettres, chiffres et '-,_' acceptés  " value="<?=$pseudo ?? ''?>" required>
                     <div id="pseudo_error" class="form-text formError"><?= $errorsArray['pseudo_error'] ?? ''?></div>
                 </div>
                 <!-- email -->

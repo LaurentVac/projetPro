@@ -13,7 +13,7 @@
                 <?php endforeach ?>
                 
             </div>
-            <div class="col-12 titleHome mt-4 ">
+            <!-- <div class="col-12 titleHome mt-4 ">
                 <h4>Les tops</h4>
             </div>
             <div class="col-12 row justify-content-center m-auto ">
@@ -29,6 +29,6 @@
                         <h5 class="card-title">Meilleur scénario sur PS4 en 2020</h5>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 </main>

@@ -22,7 +22,7 @@
                                 <td><?= $value->title?></td>
                                 <td><a href="/controllers/testCtrl.php?id=<?=$value->id?>">Afficher</a></td>
                                 <td><a href="/controllers/admin-update-testCtrl.php?id=<?=$value->id?>">Modifier</a></td>
-                                <td><button type="submit">Supprimer</button></td>
+                                <td><a href="/controllers/admin-confirm-deleteCtrl.php?idGame=<?=$value->id?>">Supprimer</a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>

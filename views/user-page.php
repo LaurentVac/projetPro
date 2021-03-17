@@ -21,7 +21,7 @@
                             <div class="collapse  " id="collapsefirstname">
                             <form method="POST">
                                 <input type="text" class=" col-6 ml-md-2 ml-5 mt-2 " name="firstname" value= "<?=$firstname ?? ''?>">
-                                <div id="firstname_error" class="form-text formError"><?= $errorsArray['firstname_error'] ?? ''?></div>
+                                <div id="firstname_error" class="form-text formError text-danger"><?= $errorsArray['firstname_error'] ?? ''?></div>
                                 <button type="submit" name="updateFirstname" class="btn buttonNav">OK</button>
                             </form>
                             </div>
@@ -41,7 +41,7 @@
                             <div class="collapse  " id="collapseLastname">
                             <form method="POST">
                                 <input type="text" class=" col-6 ml-md-2 ml-5 mt-2 " name="lastname" value= "<?=$lastname ?? ''?>">
-                                <div id="lastname_error" class="form-text formError"><?= $errorsArray['lastname_error'] ?? ''?></div>
+                                <div id="lastname_error" class="form-text formError text-danger"><?= $errorsArray['lastname_error'] ?? ''?></div>
                                 <button type="submit" name="updateLastname" class="btn buttonNav">OK</button>
                             </form>
                             </div>
@@ -61,13 +61,14 @@
                             <div class="collapse  " id="collapsePseudo">
                             <form method="POST">
                                 <input type="text" class=" col-6 ml-md-2 ml-5 mt-2 " name="pseudo" value= "<?=$pseudo ?? ''?>">
-                                <div id="pseudo_error" class="form-text formError"><?= $errorsArray['pseudo_error'] ?? ''?></div>
+                                <div id="pseudo_error" class="form-text formError text-danger"><?= $errorsArray['pseudo_error'] ?? ''?></div>
                                 <button type="submit" name="updatePseudo" class="btn buttonNav">OK</button>
                             </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="row col-12 ml-md-1 mt-2">
                     <p>
                         <strong class="col-12 mintitle"> Mon mail :</strong>
@@ -79,8 +80,12 @@
                         <div class="ml-md-5">
                             <div class="collapse  " id="collapseMail">
                             <form method="POST">
-                                <input type="email" class="col-6 ml-md-2 ml-5 mt-2" name="mail">
-                                <div id="pseudo_error" class="form-text formError"><?= $errorsArray['mail_error'] ?? ''?></div>
+                                <label for="oldMail">Votre ancien email</label>
+                                <input type="email"id="oldMail" class="col-6 ml-md-2 ml-5 mt-2" name="oldMail">
+                                <div id="pseudo_error" class="form-text formError text-danger"><?= $errorsArray['oldMail_error'] ?? ''?></div>
+                                <label for="mail">Nouveau email</label>
+                                <input type="email" id="mail" class="col-6 ml-md-2 ml-5 mt-2" name="mail">
+                                <div id="pseudo_error" class="form-text formError text-danger"><?= $errorsArray['mail_error'] ?? ''?></div>
                                 <button type="submit" name="updateMail" class="btn buttonNav">OK</button>
                             </form>
                             </div>
@@ -105,7 +110,7 @@
                                 <input type="password" name="newPassword"class=" col-6 ml-md-2 ml-5 mt-2">
                                 <label class="col-12" for="pass">Votre nouveau mot de passe</label>
                                 <input type="password" name="validNewPassword"class=" col-6 ml-md-2 ml-5 mt-2">
-                                <div id="pseudo_error" class="form-text formError"><?= $errorsArray['password_error'] ?? ''?></div>
+                                <div id="pseudo_error" class="form-text formError text-danger"><?= $errorsArray['password_error'] ?? ''?></div>
                                 <button type="submit" name="updatePassword" class="btn buttonNav">OK</button>
                             </form>
                             </div>

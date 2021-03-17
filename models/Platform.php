@@ -27,6 +27,20 @@
                     return false;
                 }   
             }
+            public function getId($id){
+                try {
+                    $sql = 'SELECT `id` FROM `platform` WHERE `id` = :id ;';
+                       // préparation de la requête
+                       $sth = $this->_pdo->prepare($sql);
+                       $sth->bindValue(':id', $id,  PDO::PARAM_INT);
+                       $sth->execute();
+                       $plat= $sth->fetch();
+                       return $plat;
+                }catch  (PDOException $e) {
+                    
+                    return false;
+                }   
+            }
             public function getPlatformForGame($id){
 
                 try {

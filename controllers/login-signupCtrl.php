@@ -6,13 +6,13 @@
     $usersArray =[];
     $success= null;
     $error = null;
-var_dump($_SESSION);
+
 
     // Contrôle du formulaire d'inscription
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['inscription'])){
             // NAME
             // On verifie l'existance et on nettoie
-            $lastname = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
+            $lastname = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
             //On test si le champ n'est pas vide
             if(!empty($lastname)){
                 // On test la valeur
@@ -26,7 +26,7 @@ var_dump($_SESSION);
             //******************************************************************** */
             // FIRSTNAME
             // On verifie l'existance et on nettoie
-            $firstname = trim(filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING));
+            $firstname = trim(filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
             //On test si le champ n'est pas vide
             if(!empty($firstname)){
                 // On test la valeur
@@ -47,7 +47,7 @@ var_dump($_SESSION);
                 // On test la valeur
                 $testRegex = preg_match('/^([a-zA-Z0-9-_]{2,36})$/',$pseudo);
                 if($testRegex == false){
-                    $errorsArray['pseudo_error'] = 'Le pseudo n\'est pas valide';
+                    $errorsArray['pseudo_error'] = 'Le pseudo peut comporter de 2 à 20 caractères. Seulement lettres, chiffres et \'-,_\' acceptés ';
                 }
             }else{
                 $errorsArray['pseudo_error'] = 'Le champ n\'est pas rempli';
@@ -62,8 +62,6 @@ var_dump($_SESSION);
          if(!empty($mail)){
              // On test la valeur
              $testMail = filter_var($mail, FILTER_VALIDATE_EMAIL);
-            
-     
              if($testMail == false){
                  $errorsArray['mail_error'] = 'Le mail n\'est pas valide';
              }
@@ -76,7 +74,7 @@ var_dump($_SESSION);
 
         if(!empty($confirmMail)){
 
-            $testConfirmMail = filter_var($confirmMail, FILTER_VALIDATE_EMAIL);
+            $testConfirmMail = trim(filter_var($confirmMail, FILTER_VALIDATE_EMAIL));
 
             if($confirmMail != $testMail){
                 $errorsArray['confirm_mail_error'] = 'Les champs mail doivent être identique';
@@ -87,7 +85,7 @@ var_dump($_SESSION);
 
         //**********************************************
         //Mot de passe
-        $passwd =  trim(filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING));
+        $passwd = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
         echo $passwd;
         if(!empty($passwd)){ 
             echo $passwd;
@@ -102,13 +100,9 @@ var_dump($_SESSION);
             $errorsArray['password_error'] = 'Le champ n\'est pas rempli';
         }
         //Confirmation de mot de passe
-        $confirmPassword = trim(filter_input(INPUT_POST, 'confirmPassword', FILTER_SANITIZE_STRING));
+        $confirmPassword = filter_input(INPUT_POST, 'confirmPassword', FILTER_SANITIZE_STRING);
         if(!empty($confirmPassword)){
             // (?=.{10,}$)(?=(?:.*?[A-Z]){2})(?=.*?[a-z])(?=(?:.*?[0-9]){2}).*
-            $testRegexPassword = preg_match( '/^[0-9]{2}$/',$confirmPassword);
-            if($testRegexPassword == false){
-                $errorsArray['confirm_password_error'] = 'Le mot de passe doit contenir au moins 10 caractères dont 2 majuscules, 1minuscule et 2 chiffres. Les caractères spéciaux ne sont pas autorisés';
-            }
 
             if($confirmPassword != $passwd){
                 $errorsArray['confirm_password_error'] = 'Les champs mot de passe doivent être identiques';
@@ -129,17 +123,14 @@ var_dump($_SESSION);
             //si le mail et le pseudo n'existe pas
             if($user->isNotExistMail($mail)){
                if($user->isNotExistPseudo($pseudo)){
-
-
-                $addUser = $user->addUser();
-                $success = 'vous êtes bien enregistré.';
+                    $addUser = $user->addUser();
+                    $success = 'vous êtes bien enregistré.';
                 }else{
-                    $errorsArray['pseudo_error'] = 'Le pseudo est déjà utisilisé veuillez en saisir un nouveau';
+                    $errorsArray['pseudo_error'] = 'Le pseudo est déjà utililisé veuillez en saisir un nouveau';
                 }    
             }else{
                 $errorsArray['mail_error'] = 'Le mail existe déjà veuillez en saisir un nouveau';
-            }
-   
+            }  
         }
     }
     //FIN DE CONTROLE DU FORMULAIRE D'INSCRIPTION
@@ -165,26 +156,23 @@ var_dump($_SESSION);
            
                
             // connexion sans admin
-                if($user){           
-                    $_SESSION['id'] = $user->id;
-                    $_SESSION['pseudo'] = $user->pseudo;
-                    $_SESSION['mail'] = $user->mail;
-                    if($user->admin == 1){
-                        $_SESSION['admin'] = $user->admin;
-                    }
-                 header('location: /index.php');
-             } else {
-                 $errorsArray['login_error'] = 'Votre login ou mot de passe n\'est pas reconnu';
-             }
-         }
+            if($user){           
+                $_SESSION['id'] = $user->id;
+                $_SESSION['pseudo'] = $user->pseudo;
+                $_SESSION['mail'] = $user->mail;
+                if($user->admin == 1){
+                    $_SESSION['admin'] = $user->admin;
+                }
+                header('location: /index.php');
+            } else {
+                $errorsArray['login_error'] = 'Votre login ou mot de passe n\'est pas reconnu';
+            }
+        }
          //On test si le champ n'est pas vide
-         
-
-         /*********************************************************** */
     }
     // fin de contrôle du formulaire d'authentification
     //**********************************************************
-     var_dump($errorsArray);
+    
 
     $background = 'bgHomePage';
     
@@ -195,6 +183,5 @@ var_dump($_SESSION);
     
     include(dirname(__FILE__).'/../views/templates/footer.php');   
     
-    //var_dump($usersArray);
-    //  include(dirname(__FILE__).'fichier atrouver');
+ 
 ?>

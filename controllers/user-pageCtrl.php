@@ -9,14 +9,7 @@ require_once(dirname(__FILE__).'/../models/Platform.php');
 $id = $_SESSION['mail'];
 $user = new User ();
 $profilUser = $user->profilUser($id);
-var_dump($_SESSION);
-var_dump($profilUser);
 
-// $studio = new Studio();
-// $listStudio = $studio->getAllStudio();
-
-// $platform = new Platform();
-// $listPlatform = $platform->getAllPlatform();
 
 //************************************************ */
 //vérification champ pseudo
@@ -66,7 +59,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'  ){
                 header('location: /controllers/user-pageCtrl.php');
             }
         }
-        var_dump($errorsArray);
     }
     if(isset($_POST['updatePseudo'])){
         $pseudo = trim(filter_input(INPUT_POST, 'pseudo', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)); 
@@ -84,41 +76,60 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'  ){
 
         if(empty($errorsArray)){    
             $setPseudo = $user->setPseudo($pseudo);
-            echo $pseudo;
-            var_dump($setPseudo);
-            $updatePseudo = $user->updatePseudo($id);
-            var_dump($updatePseudo);
+           
+            if($user->isNotExistPseudo($pseudo)){
+                $updatePseudo = $user->updatePseudo($id);
+                if($updatePseudo){
+                    $_SESSION['pseudo'] = $pseudo;
+                    header('location: /controllers/user-pageCtrl.php');
+                    $success = 'Modification réussite.';
+                }
+            }else{
+                $errorsArray['pseudo_error'] = 'Le pseudo est déjà utisilisé veuillez en saisir un nouveau';
+            }    
             
-            $_SESSION['pseudo'] = $pseudo;
-            header('location: /controllers/user-pageCtrl.php');
+            
+            
             
         }
     }
     if(isset($_POST['updateMail'])){
+        $oldMail = trim(filter_input(INPUT_POST, 'oldMail', FILTER_SANITIZE_EMAIL));
         $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
         var_dump($mail) ;
     
         //On test si le champ n'est pas vide
-        if(!empty($mail)){
+        if(!empty($mail) && !empty($oldMail)){
+            
             // On test la valeur
-            $testMail = filter_var($mail, FILTER_VALIDATE_EMAIL);
-           
-    
-            if($testMail == false){
-                $errorsArray['mail_error'] = 'Le mail n\'est pas valide';
+            $testMail1 = filter_var($mail, FILTER_VALIDATE_EMAIL);
+            $testMail2 = filter_var($oldMail, FILTER_VALIDATE_EMAIL);
+            
+            if($testMail1 == false && $testMail2 == false){
+                $errorsArray['mail_error'] = 'Un des mails n\'est pas valide';
             }
+            if($oldMail != $profilUser->mail){
+                $errorsArray['oldMail_error'] = 'Votre ancien mail n\'est pas correct';
+            }
+
+
         }else{
-            $errorsArray['mail_error'] = 'Le champ n\'est pas rempli';
+            $errorsArray['mail_error'] = 'Un champ n\'est pas rempli';
         } 
 
         if(empty($errorsArray)){
             $setMail = $user->setMail($mail);
-            $updateMail = $user->updateMail($id);
-            var_dump($updateMail);
-            if($updateMail){
-                $_SESSION['mail'] = $mail;
-                header('location: /controllers/user-pageCtrl.php');
-            }
+            if($user->isNotExistMail($mail)){
+                $updateMail = $user->updateMail($id);
+                if($updateMail){
+                    $_SESSION['mail'] = $mail;
+                    header('location: /controllers/user-pageCtrl.php');
+                }   
+            }else{
+                $errorsArray['mail_error'] = 'Le mail existe déjà veuillez en saisir un nouveau';
+
+            }  
+            
         }
     }
     //mise à jour du mot de passe 
@@ -141,7 +152,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'  ){
             $errorsArray['password_error'] = 'Le mot de passe actuel saisi est incorrect';
         }
     
-        if($validNewPassword == $newPassword){echo $validNewPassword;
+        if($validNewPassword == $newPassword){
             if(empty($errorsArray)){ 
                 $hashPasswd = $user->setPassword($newPassword);
                 var_dump($hashPasswd);
@@ -157,7 +168,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'  ){
 
 }
 
-
+var_dump($errorsArray);
    
     
 
